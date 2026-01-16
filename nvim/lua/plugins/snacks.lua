@@ -10,7 +10,7 @@ return {
     terminal = { enabled = true }
   },
   keys = {
-	  { "<C- />", function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t" } },
+	  { "<C-/>", function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t" } },
 	  { "<leader>sf", function() Snacks.picker.files() end, desc = "Search Files" },
 	  { "<leader>sg", function() Snacks.picker.grep() end, desc = "Search Grep" }
   }
