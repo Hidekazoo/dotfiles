@@ -9,3 +9,8 @@ vim.keymap.set('n', '<leader>sw', function()
     print("Switched to nightfox")
   end
 end, { desc = "Toggle nightfox/dayfox" })
+vim.keymap.set("n", "gl", function()
+  vim.diagnostic.open_float()
+end, { desc = "Show line diagnostics" })
+vim.keymap.set({ "n", "v" }, "<D-.>", vim.lsp.buf.code_action, { desc = "Code Action" })
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
