@@ -7,7 +7,9 @@ return {
     indent = { enabled = true },
     input = { enabled = true },
     picker = { enabled = true },
-    terminal = { enabled = true }
+    terminal = {
+      enabled = true,
+    }
   },
   keys = {
 	  { "<C-/>", function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t" } },

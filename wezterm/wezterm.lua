@@ -7,7 +7,7 @@ config.font_size = 14;
 config.use_ime = true
 config.automatically_reload_config = true
 config.font = wezterm.font 'UDEV Gothic 35NF'
-
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
 config.keys = {
   {
     key = 'd',

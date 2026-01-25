@@ -7,12 +7,43 @@ return {
 		"mason-org/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				handlers = {
-					function(server_name)
-						require("lspconfig")[server_name].setup({})
-					end,
-					rust_analyzer = function() end,
+				ensure_installed = {
+					"angularls",
+					"ts_ls",
+					"html",
+					"cssls",
+					"jsonls",
+					"gopls",
 				},
+        handlers = {
+          function(server_name)
+            require("lspconfig")[server_name].setup({})
+          end,
+          rust_analyzer = function() end,
+          -- angularls専用の設定を追加
+          angularls = function()
+            require("lspconfig").angularls.setup({
+              on_new_config = function(new_config,
+                new_root_dir)
+                local project_ts = new_root_dir ..
+                "/node_modules/typescript/lib"
+                local project_angularls = new_root_dir ..
+                "/node_modules/@angular/language-service"
+
+                if vim.fn.isdirectory(project_ts) == 1 and
+                  vim.fn.isdirectory(project_angularls) == 1 then
+                  new_config.cmd = {
+                    "ngserver",
+                    "--stdio",
+                    "--tsProbeLocations", project_ts,
+                    "--ngProbeLocations",
+                    project_angularls,
+                  }
+                end
+              end,
+            })
+          end,
+        },
 			})
 		end,
 		dependencies = {
@@ -35,5 +66,44 @@ return {
 				end,
 			})
 		end,
+    opts = {
+      servers = {
+        angularls = {},
+        elixirls = {
+      keys = {
+        {
+          "<leader>cp",
+          function()
+            local params = vim.lsp.util.make_position_params()
+            LazyVim.lsp.execute({
+              command = "manipulatePipes:serverid",
+              arguments = { "toPipe", params.textDocument.uri, params.position.line, params.position.character },
+            })
+          end,
+          desc = "To Pipe",
+        },
+        {
+          "<leader>cP",
+          function()
+            local params = vim.lsp.util.make_position_params()
+            LazyVim.lsp.execute({
+              command = "manipulatePipes:serverid",
+              arguments = { "fromPipe", params.textDocument.uri, params.position.line, params.position.character },
+            })
+          end,
+          desc = "From Pipe",
+        },
+      },
+    },
+      },
+      setup = {
+        angularls = function()
+          Snacks.util.lsp.on({ name = "angularls" }, function(_, client)
+            --HACK: disable angular renaming capability due to duplicate rename popping up
+            client.server_capabilities.renameProvider = false
+          end)
+        end,
+      },
+    },
 	},
 }
