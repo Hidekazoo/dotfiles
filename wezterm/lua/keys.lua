@@ -27,10 +27,10 @@ function M.apply(config)
 			mods = "CMD",
 			action = act.CloseCurrentPane({ confirm = true }),
 		},
-		{ key = "h", mods = "CMD", action = act.ActivatePaneDirection("Left") },
-		{ key = "l", mods = "CMD", action = act.ActivatePaneDirection("Right") },
-		{ key = "k", mods = "CMD", action = act.ActivatePaneDirection("Up") },
-		{ key = "j", mods = "CMD", action = act.ActivatePaneDirection("Down") },
+		{ key = "h", mods = "CTRL", action = act.ActivatePaneDirection("Left") },
+		{ key = "l", mods = "CTRL", action = act.ActivatePaneDirection("Right") },
+		{ key = "k", mods = "CTRL", action = act.ActivatePaneDirection("Up") },
+		{ key = "j", mods = "CTRL", action = act.ActivatePaneDirection("Down") },
 		{
 			key = "v",
 			mods = "CTRL|ALT",
@@ -72,6 +72,29 @@ function M.apply(config)
 		},
 		{ key = "[", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
 		{ key = "]", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
+		{
+			key = "LeftArrow",
+			mods = "ALT",
+			action = act.SendString("\x1bb"),
+		},
+		{
+			key = "RightArrow",
+			mods = "ALT",
+			action = act.SendString("\x1bf"),
+		},
+		{
+			key = "k",
+			mods = "CMD",
+			action = act.Multiple({
+				act.ClearScrollback("ScrollbackAndViewport"),
+				-- 'SendKey' を使ってシェルに Ctrl + l を送信
+				act.SendKey({ key = "l", mods = "CTRL" }),
+			}),
+		},
+		{ key = "h", mods = "CMD|SHIFT", action = act.AdjustPaneSize({ "Left", 5 }) },
+		{ key = "j", mods = "CMD|SHIFT", action = act.AdjustPaneSize({ "Down", 5 }) },
+		{ key = "k", mods = "CMD|SHIFT", action = act.AdjustPaneSize({ "Up", 5 }) },
+		{ key = "l", mods = "CMD|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
 	}
 end
 
