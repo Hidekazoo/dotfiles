@@ -1,0 +1,23 @@
+font-size = 16
+keybind = global:cmd+shift+space=toggle_quick_terminal
+font-feature = -dlig
+font-family = "UDEV Gothic 35NFLG"
+
+background-opacity = 0.85
+background-blur = true
+window-padding-y = 8
+window-padding-balance = true
+window-theme = ghostty
+
+# macOS固有
+macos-option-as-alt = true
+
+# tmux ペイン分割 (prefix=Ctrl-b=\x02 を送って | / - を実行)
+keybind = super+d=text:\x02|
+keybind = super+shift+d=text:\x02-
+
+# 画面クリア (tmux 履歴も含めて消す)
+keybind = cmd+k=text:clear && tmux clear-history\n
+
+theme = Kanagawa Wave
+
